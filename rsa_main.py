@@ -63,6 +63,15 @@ pN_coprime_list = sorted(list(set(pN_coprime_list) - pN_non_coprime_list))
 
 e = pN_coprime_list[randrange(len(pN_coprime_list))]
 
+# find d
+d_list = []
+for i in range(100):
+    if i * e % pN == 1:
+        d_list.append(i)
+
+print(d_list)
+
+
 print(f'p, q: {p}, {q}\nN, pN: {N}, {pN}');print();print(pN_factor);print(f'e: {e}')
 
 
