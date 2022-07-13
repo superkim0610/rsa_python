@@ -1,7 +1,5 @@
-from gettext import find
 from random import randrange
-from tkinter import E
-from unittest import result
+import base64
 
 def findFactor(n):
     global prime_list
@@ -15,8 +13,16 @@ def findFactor(n):
         i += 1
     return result
 
-MIN_PRIME = 10
-MAX_PRIME = 100
+def encryption(m, N, e):
+  c = m**e % N
+  return c
+  
+def decryption(c, N, d):
+  m = c**d % N
+  return m
+
+MIN_PRIME = 2**7
+MAX_PRIME = 2**12
 
 erato_sieve = [0] + [1 for _ in range(MAX_PRIME-1)]
 prime_list = []
@@ -33,12 +39,11 @@ i = 0
 while not prime_list[i] >= MIN_PRIME:
     i += 1
 ranged_prime_list = prime_list[i:]
-
-i = len(prime_list) - 1
+vi = len(prime_list) - 1
 while not prime_list[i] <= MAX_PRIME:
     i -= 1
 ranged_prime_list = ranged_prime_list[:i-1]
-print(ranged_prime_list)
+# print(ranged_prime_list)
 
 # testable line
 # print(findFactor(97))
@@ -65,16 +70,25 @@ e = pN_coprime_list[randrange(len(pN_coprime_list))]
 
 # find d
 d_list = []
-for i in range(100):
+i = 1
+while not len(d_list) >= 10:
     if i * e % pN == 1:
         d_list.append(i)
+    i += 1
+d = d_list[randrange(len(d_list))]
+# for various test
+#print(d_list)
+print(f'p, q: {p}, {q}\nN, pN: {N}, {pN}');print();print(pN_factor);
+print('N:',N)
+print('e:',e)
+print('d:',d)
 
-print(d_list)
 
+public_key = (N, e)
+private_key = (N, d)
 
-print(f'p, q: {p}, {q}\nN, pN: {N}, {pN}');print();print(pN_factor);print(f'e: {e}')
-
-
-
-
-
+m = int(input())
+a =encryption(m, N, e)
+print(a)
+b = decryption(a, N, d)
+print(b)
